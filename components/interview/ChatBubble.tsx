@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { memo } from 'react';
 import { ChatMessage } from '@/types';
 import { User, Bot } from 'lucide-react';
 
@@ -7,7 +8,9 @@ interface ChatMessageProps {
   isStreaming?: boolean;
 }
 
-export function ChatBubble({ message, isStreaming }: ChatMessageProps) {
+// memo: only the actively-streaming bubble re-renders per token.
+// All previous messages are stable and skip reconciliation entirely.
+export const ChatBubble = memo(function ChatBubble({ message, isStreaming }: ChatMessageProps) {
   const isUser = message.role === 'user';
 
   return (
@@ -38,7 +41,7 @@ export function ChatBubble({ message, isStreaming }: ChatMessageProps) {
       </div>
     </div>
   );
-}
+});
 
 export function TypingIndicator() {
   return (

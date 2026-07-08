@@ -1,15 +1,20 @@
 'use client';
 
-import { useEffect, useRef, use } from 'react';
+import { useEffect, useRef, use, useMemo, lazy, Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getModule } from '@/lib/modules';
 import { useChat } from '@/hooks/useChat';
 import { ChatBubble, TypingIndicator } from '@/components/interview/ChatBubble';
 import { ChatInput } from '@/components/interview/ChatInput';
-import { EvaluationReport } from '@/components/interview/EvaluationReport';
 import { ArrowLeft, StopCircle, Loader2 } from 'lucide-react';
 import clsx from 'clsx';
+
+// Lazy-load EvaluationReport — only shown after the interview ends,
+// no reason to ship it in the initial page bundle.
+const EvaluationReport = lazy(() =>
+  import('@/components/interview/EvaluationReport').then((m) => ({ default: m.EvaluationReport })),
+);
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -39,7 +44,12 @@ export default function InterviewPage({ params }: Props) {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [session?.messages.length, streaming]);
 
-  const messages = session?.messages.filter((m) => m.content !== '__INTERVIEW_START__') ?? [];
+  // Memoised — filter only reruns when session messages actually change,
+  // not on every streaming token (since message count doesn't change mid-stream).
+  const messages = useMemo(
+    () => session?.messages.filter((m) => m.content !== '__INTERVIEW_START__') ?? [],
+    [session?.messages],
+  );
   const evaluation = session?.evaluation;
   const hasEnded   = !!evaluation;
   const canEnd     = !streaming && !evaluating && messages.length >= 3 && !hasEnded;
@@ -102,7 +112,13 @@ export default function InterviewPage({ params }: Props) {
         {evaluation && (
           <div className="mt-4 p-5 rounded-2xl border border-surface-border bg-surface-card">
             <h2 className="text-base font-bold text-slate-900 dark:text-white mb-5">Interview Evaluation</h2>
-            <EvaluationReport evaluation={evaluation} />
+            <Suspense fallback={
+              <div className="flex items-center gap-2 text-sm text-slate-400 py-8 justify-center">
+                <Loader2 size={16} className="animate-spin" /> Loading evaluation...
+              </div>
+            }>
+              <EvaluationReport evaluation={evaluation} />
+            </Suspense>
             <div className="mt-6 pt-4 border-t border-surface-border flex gap-3">
               <Link
                 href="/interview"

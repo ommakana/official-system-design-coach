@@ -19,7 +19,7 @@ export function ModuleCard({ module, completed, href }: ModuleCardProps) {
     <Link
       href={href}
       className={clsx(
-        'group relative flex flex-col gap-3 p-5 rounded-xl border transition-all duration-200',
+        'group relative flex flex-col gap-3 p-5 rounded-xl border transition-colors duration-200',
         'bg-surface-card border-surface-border',
         'hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-500/5',
         completed && 'ring-1 ring-violet-500/30',
