@@ -8,6 +8,7 @@ export const analyticsUIModule: DesignModule = {
   companies: ['Mixpanel', 'Amplitude', 'Google', 'Salesforce', 'Stripe'],
   tags: ['OLAP', 'Charts', 'Query Builder', 'Async Queries'],
   estimatedMinutes: 55,
+  youtubeUrl: 'https://youtu.be/gXwF0VbTKvs?si=brTfAo_pBsNLy21D',
   sections: [
     {
       id: 'functional-requirements',
