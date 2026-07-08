@@ -8,6 +8,7 @@ export const infiniteFeedModule: DesignModule = {
   companies: ['Meta', 'Twitter/X', 'LinkedIn', 'Reddit', 'TikTok'],
   tags: ['Virtualization', 'Pagination', 'Real-time', 'Optimistic UI'],
   estimatedMinutes: 40,
+  youtubeUrl: 'https://youtu.be/_HjRSHeQ92k?si=BeOeKH-f2mjVE0k_',
   sections: [
     {
       id: 'problem',
