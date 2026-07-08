@@ -8,6 +8,7 @@ export const searchAutocompleteModule: DesignModule = {
   companies: ['Google', 'Amazon', 'Airbnb', 'Twitter', 'Uber'],
   tags: ['Trie', 'Redis', 'Debounce', 'CDN Cache'],
   estimatedMinutes: 40,
+  youtubeUrl: 'https://youtu.be/jVMqj8A7Fpk?si=5TNnVIHmuxm1f_t2',
   sections: [
     {
       id: 'functional-requirements',

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getModule, ALL_MODULES } from '@/lib/modules';
 import { ModuleSection } from '@/types';
-import { ArrowLeft, Clock, Building2, Play } from 'lucide-react';
+import { ArrowLeft, Clock, Building2, Play, Youtube } from 'lucide-react';
 import type { Metadata } from 'next';
 import clsx from 'clsx';
 import { getVisual } from '@/lib/visuals';
@@ -79,12 +79,24 @@ export default async function ModulePage({ params }: Props) {
         </div>
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{module.title}</h1>
         <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{module.description}</p>
-        <Link
-          href={`/interview/${module.slug}`}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 text-white text-sm font-medium hover:bg-violet-700 transition-colors"
-        >
-          <Play size={14} /> Practice Interview
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href={`/interview/${module.slug}`}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 text-white text-sm font-medium hover:bg-violet-700 transition-colors"
+          >
+            <Play size={14} /> Practice Interview
+          </Link>
+          {module.youtubeUrl && (
+            <a
+              href={module.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+            >
+              <Youtube size={14} /> Watch on YouTube
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Section nav */}

@@ -17,6 +17,7 @@ export interface DesignModule {
   tags: string[];
   estimatedMinutes: number;
   sections: ModuleSection[];
+  youtubeUrl?: string; // optional curated video resource
 }
 
 // ── Interview / chat types ──────────────────────────────────────────────────
