@@ -5,6 +5,12 @@ import { ModuleSection } from '@/types';
 import { ArrowLeft, Clock, Building2, Play } from 'lucide-react';
 import type { Metadata } from 'next';
 import clsx from 'clsx';
+import { getVisual } from '@/lib/visuals';
+import { ArchDiagram } from '@/components/learn/diagrams/ArchDiagram';
+import { FlowTimeline } from '@/components/learn/diagrams/FlowTimeline';
+import { ComponentTree } from '@/components/learn/diagrams/CompTreeDiagram';
+import { ComparisonPanel } from '@/components/learn/diagrams/ComparisonPanel';
+import { VisualData } from '@/types/visuals';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -18,12 +24,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: m?.title ?? 'Module' };
 }
 
-function SectionBlock({ section }: { section: ModuleSection }) {
+function VisualBlock({ visual }: { visual: VisualData }) {
+  if (visual.type === 'arch')       return <ArchDiagram data={visual} />;
+  if (visual.type === 'flow')       return <FlowTimeline data={visual} />;
+  if (visual.type === 'tree')       return <ComponentTree data={visual} />;
+  if (visual.type === 'comparison') return <ComparisonPanel data={visual} />;
+  return null;
+}
+
+function SectionBlock({ section, slug }: { section: ModuleSection; slug: string }) {
+  const visual = getVisual(slug, section.id);
   return (
     <div id={section.id} className="scroll-mt-6">
       <h2 className="text-base font-semibold text-slate-900 dark:text-white mb-3 pb-2 border-b border-surface-border">
         {section.title}
       </h2>
+      {visual && <VisualBlock visual={visual} />}
       <div className="prose prose-sm dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
         {section.content}
       </div>
@@ -87,7 +103,7 @@ export default async function ModulePage({ params }: Props) {
       {/* Sections */}
       <div className="space-y-8">
         {module.sections.map((s) => (
-          <SectionBlock key={s.id} section={s} />
+          <SectionBlock key={s.id} section={s} slug={slug} />
         ))}
       </div>
     </div>
