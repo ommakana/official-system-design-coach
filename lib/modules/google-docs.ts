@@ -8,6 +8,7 @@ export const googleDocsModule: DesignModule = {
   companies: ['Google', 'Notion', 'Atlassian', 'Dropbox', 'Microsoft'],
   tags: ['CRDT', 'OT', 'Real-time', 'Rich Text', 'Offline'],
   estimatedMinutes: 60,
+  youtubeUrl: 'https://youtu.be/9JKBlkwg0yM?si=I-WSr7LSSkGIkNQv',
   sections: [
     {
       id: 'problem',
