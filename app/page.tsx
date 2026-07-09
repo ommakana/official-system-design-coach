@@ -22,6 +22,14 @@ export default function DashboardPage() {
           Prepare for Senior and Staff frontend interviews at Google, Meta, Atlassian, Airbnb and more.
           Study curated modules, then go head-to-head with an AI interviewer.
         </p>
+        <a
+          href="https://om-makana.vercel.app/"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex w-fit items-center gap-2 rounded-full border border-surface-border bg-surface-card px-3 py-1.5 text-sm text-slate-600 dark:text-slate-300 hover:border-violet-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+        >
+          <span className="font-medium">// Human in the loop:</span> <span className="font-semibold">Om Makana</span>
+        </a>
       </div>
 
       {/* CTA cards */}
