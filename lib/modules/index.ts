@@ -11,8 +11,11 @@ import { notificationSystemModule } from './notification-system';
 import { fileUploadModule }         from './file-upload';
 import { analyticsUIModule }        from './analytics-ui';
 import { dataGridModule }           from './data-grid';
+import { httpStatusCodesModule }    from './http-status-codes';
+import { contentSecurityPolicyModule } from './content-security-policy';
+import { javascriptFundamentalsModule } from './javascript-fundamentals';
 
-// 12 modules — Whiteboard removed (overlaps with Figma canvas/CRDT concepts).
+// 12 system design modules + 3 reference modules.
 export const ALL_MODULES: DesignModule[] = [
   // Senior
   trelloModule,
@@ -28,6 +31,10 @@ export const ALL_MODULES: DesignModule[] = [
   youtubeModule,
   slackModule,
   analyticsUIModule,
+  // Reference
+  httpStatusCodesModule,
+  contentSecurityPolicyModule,
+  javascriptFundamentalsModule,
 ];
 
 export function getModule(slug: string): DesignModule | undefined {
@@ -39,4 +46,6 @@ export {
   chatAppModule, youtubeModule, slackModule, figmaModule,
   searchAutocompleteModule, notificationSystemModule,
   fileUploadModule, analyticsUIModule, dataGridModule,
+  httpStatusCodesModule, contentSecurityPolicyModule,
+  javascriptFundamentalsModule,
 };

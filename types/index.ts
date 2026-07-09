@@ -1,6 +1,6 @@
 // ── Module content types ────────────────────────────────────────────────────
 
-export type Difficulty = 'Senior' | 'Staff';
+export type Difficulty = 'Senior' | 'Staff' | 'Reference';
 
 export interface ModuleSection {
   id: string;

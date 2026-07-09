@@ -11,6 +11,7 @@ import { FlowTimeline } from '@/components/learn/diagrams/FlowTimeline';
 import { ComponentTree } from '@/components/learn/diagrams/CompTreeDiagram';
 import { ComparisonPanel } from '@/components/learn/diagrams/ComparisonPanel';
 import { VisualData } from '@/types/visuals';
+import { ContentRenderer } from '@/components/learn/ContentRenderer';
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -32,7 +33,7 @@ function VisualBlock({ visual }: { visual: VisualData }) {
   return null;
 }
 
-function SectionBlock({ section, slug }: { section: ModuleSection; slug: string }) {
+function SectionBlock({ section, slug, isReference }: { section: ModuleSection; slug: string; isReference: boolean }) {
   const visual = getVisual(slug, section.id);
   return (
     <div id={section.id} className="scroll-mt-6">
@@ -40,9 +41,7 @@ function SectionBlock({ section, slug }: { section: ModuleSection; slug: string 
         {section.title}
       </h2>
       {visual && <VisualBlock visual={visual} />}
-      <div className="prose prose-sm dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
-        {section.content}
-      </div>
+      <ContentRenderer content={section.content} isReference={isReference} />
     </div>
   );
 }
@@ -53,8 +52,9 @@ export default async function ModulePage({ params }: Props) {
   if (!module) notFound();
 
   const DIFFICULTY_STYLES = {
-    Senior: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-    Staff:  'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+    Senior:    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+    Staff:     'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+    Reference: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
   };
 
   return (
@@ -80,12 +80,14 @@ export default async function ModulePage({ params }: Props) {
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{module.title}</h1>
         <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{module.description}</p>
         <div className="flex flex-wrap gap-3">
-          <Link
-            href={`/interview/${module.slug}`}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 text-white text-sm font-medium hover:bg-violet-700 transition-colors"
-          >
-            <Play size={14} /> Practice Interview
-          </Link>
+          {module.difficulty !== 'Reference' && (
+            <Link
+              href={`/interview/${module.slug}`}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 text-white text-sm font-medium hover:bg-violet-700 transition-colors"
+            >
+              <Play size={14} /> Practice Interview
+            </Link>
+          )}
           {module.youtubeUrl && (
             <a
               href={module.youtubeUrl}
@@ -115,7 +117,7 @@ export default async function ModulePage({ params }: Props) {
       {/* Sections */}
       <div className="space-y-8">
         {module.sections.map((s) => (
-          <SectionBlock key={s.id} section={s} slug={slug} />
+          <SectionBlock key={s.id} section={s} slug={slug} isReference={module.difficulty === 'Reference'} />
         ))}
       </div>
     </div>

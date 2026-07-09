@@ -22,7 +22,7 @@ export default function InterviewPickerPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {ALL_MODULES.map((m) => (
+        {ALL_MODULES.filter((m) => m.difficulty !== 'Reference').map((m) => (
           <ModuleCard key={m.slug} module={m} href={`/interview/${m.slug}`} />
         ))}
       </div>

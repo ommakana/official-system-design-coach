@@ -2,14 +2,17 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, MessageSquare, Home, X } from 'lucide-react';
+import { BookOpen, MessageSquare, Home, X, BookMarked } from 'lucide-react';
 import clsx from 'clsx';
+import { ALL_MODULES } from '@/lib/modules';
 
 const NAV = [
   { href: '/',          label: 'Dashboard',  Icon: Home },
   { href: '/learn',     label: 'Learn',      Icon: BookOpen },
   { href: '/interview', label: 'Interview',  Icon: MessageSquare },
 ];
+
+const REFERENCE_MODULES = ALL_MODULES.filter((m) => m.difficulty === 'Reference');
 
 interface SidebarProps {
   onClose?: () => void;
@@ -39,9 +42,9 @@ export function Sidebar({ onClose }: SidebarProps) {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {NAV.map(({ href, label, Icon }) => {
-          const active = pathname === href || (href !== '/' && pathname.startsWith(href));
+          const active = pathname === href || (href !== '/' && pathname.startsWith(href) && !pathname.startsWith('/learn/'));
           return (
             <Link
               key={href}
@@ -59,6 +62,33 @@ export function Sidebar({ onClose }: SidebarProps) {
             </Link>
           );
         })}
+
+        {/* Reference section */}
+        <div className="pt-4">
+          <p className="px-3 pb-1.5 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            Reference
+          </p>
+          {REFERENCE_MODULES.map((m) => {
+            const href = `/learn/${m.slug}`;
+            const active = pathname === href;
+            return (
+              <Link
+                key={m.slug}
+                href={href}
+                onClick={onClose}
+                className={clsx(
+                  'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                  active
+                    ? 'bg-emerald-600 text-white'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-surface-hover hover:text-slate-900 dark:hover:text-white',
+                )}
+              >
+                <BookMarked size={16} />
+                {m.title}
+              </Link>
+            );
+          })}
+        </div>
       </nav>
 
       {/* Footer hint */}

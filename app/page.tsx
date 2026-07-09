@@ -69,7 +69,7 @@ export default function DashboardPage() {
           Popular Starting Points
         </h2>
         <div className="space-y-2">
-          {ALL_MODULES.slice(0, 5).map((m) => (
+          {ALL_MODULES.filter((m) => m.difficulty !== 'Reference').slice(0, 5).map((m) => (
             <div key={m.slug} className="flex items-center justify-between p-3 rounded-lg border border-surface-border bg-surface-card hover:border-violet-500/20 transition-colors">
               <div>
                 <p className="text-sm font-medium text-slate-800 dark:text-slate-200">{m.title}</p>

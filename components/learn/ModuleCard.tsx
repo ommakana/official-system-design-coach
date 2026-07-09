@@ -10,8 +10,9 @@ interface ModuleCardProps {
 }
 
 const DIFFICULTY_STYLES = {
-  Senior: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  Staff:  'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+  Senior:    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  Staff:     'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
+  Reference: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
 };
 
 export function ModuleCard({ module, completed, href }: ModuleCardProps) {
